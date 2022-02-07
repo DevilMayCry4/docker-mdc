@@ -15,6 +15,7 @@ on:
       - ".github/workflows/sync-readme.yml"
       - ".github/workflows/release.yml"
       - "LICENSE"
+      
 
 jobs:
     build:

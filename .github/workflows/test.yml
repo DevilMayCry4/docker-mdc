@@ -36,7 +36,7 @@ jobs:
 
         - name: Build the test image
           run: |
-            docker build -t vergilgao/avdc:test \
+            docker build -t ivirgil/avdc:test \
               --build-arg MDC_VERSION=${{ env.MDC_VERSION }} \
               --build-arg BUILD_DATE=$(date +"%Y-%m-%d") \
               .  
@@ -48,6 +48,6 @@ jobs:
               -e SUCCESS_OUTPUT="test_output" \
               -e DEBUG=1 \
               -v ${PWD}/Test:/app/data \
-              vergilgao/avdc:test
+              ivirgil/avdc:test
             find . -name MIFD-046.mp4
             find . -name SVDVD-471.mp4

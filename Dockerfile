@@ -1,5 +1,5 @@
 FROM python:3.8-slim
-LABEL maintainer="VergilGao"
+LABEL maintainer="ivirgil"
 
 # 软件包版本号
 ARG MDC_VERSION

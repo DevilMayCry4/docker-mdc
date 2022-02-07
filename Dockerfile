@@ -9,7 +9,7 @@ RUN \
     apt-get install -y wget ca-certificates && \
     mkdir build && \
     cd build && \
-    wget -O - https://github.com/yoshiko2/Movie_Data_Capture/archive/${MDC_VERSION}.tar.gz | tar xz && \
+    wget -O - https://github.com/DevilMayCry4/Movie_Data_Capture/archive/${MDC_VERSION}.tar.gz | tar xz && \
     mv Movie_Data_Capture-${MDC_VERSION} /app && \
     cd .. && \
     rm -rf build && \

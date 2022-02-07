@@ -15,7 +15,7 @@ jobs:
 
         - name: Set up build args
           run: |
-            echo "MDC_VERSION=$(cat VERSION)" >>  6.0.2
+            echo "MDC_VERSION=$(cat VERSION)" >>  "6.0.2"
             echo "BUILD_DATE=$(date +"%Y-%m-%d")" >> $GITHUB_ENV
         
         - name: Set up QEMU

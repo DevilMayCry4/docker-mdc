@@ -37,8 +37,7 @@ FROM debian:11-slim
 
 ARG BUILD_DATE
 ARG VERSION
-
-LABEL build_version="catfight360.com version:${VERSION} Build-date:${BUILD_DATE}"
+ 
 LABEL maintainer="virgil"
 LABEL build_from="https://github.com/DevilMayCry4/Movie_Data_Capture"
 LABEL org.opencontainers.image.source="https://github.com/DevilMayCry4/docker-mdc"

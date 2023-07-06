@@ -32,12 +32,6 @@ jobs:
         username: vergilgao
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
-      with:
-        registry: ghcr.io
-        username: vergilgao
-        password: ${{ secrets.GHCR_TOKEN }}
 
     - name: Build and push
       id: docker_build
@@ -48,21 +42,16 @@ jobs:
         platforms: linux/amd64
         push: true
         tags: |
-          vergilgao/mdc:${{ env.MAJOR_VERSION }}
-          vergilgao/mdc:${{ env.MINOR_VERSION }}
-          vergilgao/mdc:${{ env.BUILD_VERSION }}
-          vergilgao/mdc:${{ env.TAG_VERSION }}
-          vergilgao/mdc:latest
-          ghcr.io/vergilgao/mdc:${{ env.MAJOR_VERSION }}
-          ghcr.io/vergilgao/mdc:${{ env.MINOR_VERSION }}
-          ghcr.io/vergilgao/mdc:${{ env.BUILD_VERSION }}
-          ghcr.io/vergilgao/mdc:${{ env.TAG_VERSION }}
-          ghcr.io/vergilgao/mdc:latest
-          vergilgao/avdc:${{ env.MAJOR_VERSION }}
-          vergilgao/avdc:${{ env.MINOR_VERSION }}
-          vergilgao/avdc:${{ env.BUILD_VERSION }}
-          vergilgao/avdc:${{ env.TAG_VERSION }}
-          vergilgao/avdc:latest
+          virigl/mdc:${{ env.MAJOR_VERSION }}
+          virigl/mdc:${{ env.MINOR_VERSION }}
+          virigl/mdc:${{ env.BUILD_VERSION }}
+          virigl/mdc:${{ env.TAG_VERSION }}
+          virigl/mdc:latest 
+          virigl/avdc:${{ env.MAJOR_VERSION }}
+          virigl/avdc:${{ env.MINOR_VERSION }}
+          virigl/avdc:${{ env.BUILD_VERSION }}
+          virigl/avdc:${{ env.TAG_VERSION }}
+          virigl/avdc:latest
         build-args: |
           VERSION=${{ env.BUILD_VERSION }}
           BUILD_DATE=${{ env.BUILD_DATE }}

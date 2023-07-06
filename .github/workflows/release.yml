@@ -42,7 +42,7 @@ jobs:
         platforms: linux/amd64
         push: true
         tags: |
-          ivirgil/avdc:${{ env.MDC_VERSION }} 
+          ivirgil/avdc:${{ env.BUILD_VERSION }} 
           ivirgil/avdc:latest
         build-args: |
           VERSION=${{ env.BUILD_VERSION }}

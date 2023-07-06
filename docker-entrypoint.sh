@@ -18,7 +18,6 @@ if [ ! -d /config ]; then
     echo "---no config folder found, create...---"
     mkdir -p /config
 fi
-chown -R ${UID}:${GID} /data /config 
 
 echo "Checking if config file exist"
 if [ ! -f "${config_file}" ]; then

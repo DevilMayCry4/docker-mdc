@@ -42,16 +42,8 @@ jobs:
         platforms: linux/amd64
         push: true
         tags: |
-          virigl/mdc:${{ env.MAJOR_VERSION }}
-          virigl/mdc:${{ env.MINOR_VERSION }}
-          virigl/mdc:${{ env.BUILD_VERSION }}
-          virigl/mdc:${{ env.TAG_VERSION }}
-          virigl/mdc:latest 
-          virigl/avdc:${{ env.MAJOR_VERSION }}
-          virigl/avdc:${{ env.MINOR_VERSION }}
-          virigl/avdc:${{ env.BUILD_VERSION }}
-          virigl/avdc:${{ env.TAG_VERSION }}
-          virigl/avdc:latest
+          vergilgao/avdc:${{ env.MDC_VERSION }} 
+          vergilgao/avdc:latest
         build-args: |
           VERSION=${{ env.BUILD_VERSION }}
           BUILD_DATE=${{ env.BUILD_DATE }} 

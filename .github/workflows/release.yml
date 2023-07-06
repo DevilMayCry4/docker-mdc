@@ -54,9 +54,7 @@ jobs:
           virigl/avdc:latest
         build-args: |
           VERSION=${{ env.BUILD_VERSION }}
-          BUILD_DATE=${{ env.BUILD_DATE }}
-        cache-from: type=registry,ref=ghcr.io/vergilgao/mdc:buildcache
-        cache-to: type=registry,ref=ghcr.io/vergilgao/mdc:buildcache,mode=max
+          BUILD_DATE=${{ env.BUILD_DATE }} 
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}    

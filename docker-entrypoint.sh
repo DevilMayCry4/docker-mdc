@@ -11,6 +11,7 @@ echo "---Checking if GID: ${GID} matches user---"
 groupmod -o -g ${GID} ${USER} > /dev/null 2>&1 ||:
 usermod -g ${GID} ${USER}
 echo "---Setting umask to ${UMASK}---"
+
 umask ${UMASK}
 
 echo "---Taking ownership of data...---"

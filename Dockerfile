@@ -11,9 +11,8 @@ RUN \
     && apt-get clean -y
 
 ARG MDC_SOURCE_VERSION
-MDC_SOURCE_VERSION=6.1.6
 ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-0e7f7f497e49ae9c2dd776357892a1f1cd6d6068}
-
+ENV MDC_SOURCE_VERSION=6.1.6
  
 
 RUN mkdir -p /tmp/mdc && cd /tmp/mdc \

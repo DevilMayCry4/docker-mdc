@@ -16,7 +16,7 @@ ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-0e7f7f497e49ae9c2dd776357892a1f1cd6
 
 RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
     # get mdc source code
-    && wget -O- https://github.com/DevilMayCry4/Movie_Data_Capture/archive/$MDC_SOURCE_VERSION.tar.gz  | tar xz -C /tmp/mdc --strip-components 1 \
+    && wget -O- https://codeload.github.com/DevilMayCry4/Movie_Data_Capture/zip/refs/tags/$MDC_SOURCE_VERSION  | tar xz -C /tmp/mdc --strip-components 1 \
     && python3 -m venv /opt/venv && . /opt/venv/bin/activate \
     && pip install --upgrade \
         pip \

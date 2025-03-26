@@ -1,4 +1,10 @@
-FROM python:3.10-slim-bullseye as build-stage
+FROM python:3.10-slim-bullseye AS dlib-bin-builder-amd64
+ARG DLIB_WHL_DIR
+RUN mkdir -p ${DLIB_WHL_DIR}
+
+FROM python:3.10-slim-bullseye AS dlib-bin-builder-arm64
+# https://github.com/ageitgey/face_recognition/blob/master/Dockerfile
+
 
 RUN \
     apt-get -y update && apt-get -y upgrade \

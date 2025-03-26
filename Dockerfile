@@ -53,7 +53,6 @@ FROM dlib-bin-builder-${TARGETARCH} AS dlib-bin-builder
 
 FROM python:3.10-slim-bullseye as build-stage
 
-
 RUN \
     apt-get -y update && apt-get -y upgrade \
     && apt install -y -q \
@@ -64,17 +63,20 @@ RUN \
     && apt-get autoremove --purge -y \
     && apt-get clean -y
 
-ARG MDC_SOURCE_VERSION=6.1.7
-ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-0e7f7f497e49ae9c2dd776357892a1f1cd6d6068}
- 
+ARG MDC_SOURCE_VERSION
+ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-c3e5fdb09fefa11c614e519786e942b08b2a8fb0}
+
+ARG DLIB_WHL_DIR
+COPY --from=dlib-bin-builder $DLIB_WHL_DIR $DLIB_WHL_DIR
 
 RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
     # get mdc source code
-    && wget -O- https://codeload.github.com/DevilMayCry4/Movie_Data_Capture/tar.gz/refs/tags/$MDC_SOURCE_VERSION  | tar xz -C /tmp/mdc --strip-components 1 \
+    && wget -O- https://codeload.github.com/DevilMayCry4/Movie_Data_Capture/tar.gz/refs/tags/$MDC_SOURCE_VERSION | tar xz -C /tmp/mdc --strip-components 1 \
     && python3 -m venv /opt/venv && . /opt/venv/bin/activate \
     && pip install --upgrade \
         pip \
         pyinstaller \
+    && if [ -n "$(ls -A $DLIB_WHL_DIR)" ]; then pip install $DLIB_WHL_DIR/*.whl; fi \
     && pip install -r requirements.txt \
     && pip install face_recognition --no-deps \
     && pyinstaller \
@@ -92,10 +94,11 @@ FROM debian:11-slim
 
 ARG BUILD_DATE
 ARG VERSION
- 
-LABEL maintainer="virgil"
-LABEL build_from="https://github.com/DevilMayCry4/Movie_Data_Capture"
-LABEL org.opencontainers.image.source="https://github.com/DevilMayCry4/docker-mdc"
+
+LABEL build_version="catfight360.com version:${VERSION} Build-date:${BUILD_DATE}"
+LABEL maintainer="VergilGao"
+LABEL build_from="https://github.com/yoshiko2/Movie_Data_Capture"
+LABEL org.opencontainers.image.source="https://github.com/VergilGao/docker-mdc"
 
 ENV TZ="Asia/Shanghai"
 ENV UID=99
@@ -117,7 +120,5 @@ RUN \
     && chown -R mdc /data /config
 
 VOLUME [ "/data", "/config" ]
-
-
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

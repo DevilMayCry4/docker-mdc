@@ -44,8 +44,8 @@ LABEL build_from="https://github.com/DevilMayCry4/Movie_Data_Capture"
 LABEL org.opencontainers.image.source="https://github.com/DevilMayCry4/docker-mdc"
 
 ENV TZ="Asia/Shanghai"
-ENV UID=99
-ENV GID=100
+ENV UID=0
+ENV GID=0
 ENV UMASK=002
 
 ADD docker-entrypoint.sh docker-entrypoint.sh

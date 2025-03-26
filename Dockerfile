@@ -63,7 +63,7 @@ RUN \
     && apt-get autoremove --purge -y \
     && apt-get clean -y
 
-ARG MDC_SOURCE_VERSION
+ARG MDC_SOURCE_VERSION=6.1.7
 ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-c3e5fdb09fefa11c614e519786e942b08b2a8fb0}
 
 ARG DLIB_WHL_DIR

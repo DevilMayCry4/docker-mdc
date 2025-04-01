@@ -10,13 +10,13 @@ RUN \
     && apt-get autoremove --purge -y \
     && apt-get clean -y
 
-ARG MDC_SOURCE_VERSION=0.0.3
+ARG MDC_SOURCE_VERSION=0.0.1
 ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-0e7f7f497e49ae9c2dd776357892a1f1cd6d6068}
  
 
 RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
     # get mdc source code
-    && wget -O-  https://codeload.github.com/DevilMayCry4/mv_dc/tar.gz/refs/tags/$MDC_SOURCE_VERSION  | tar xz -C /tmp/mdc --strip-components 1 \
+    && wget -O-  https://codeload.github.com/DevilMayCry4/Movie_Data_Capture/tar.gz/refs/tags/$MDC_SOURCE_VERSION  | tar xz -C /tmp/mdc --strip-components 1 \
     && python3 -m venv /opt/venv && . /opt/venv/bin/activate \
     && pip install --upgrade \
         pip \

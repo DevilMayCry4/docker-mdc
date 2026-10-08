@@ -1,7 +1,10 @@
 FROM python:3.10-slim-bullseye as build-stage
 
-RUN \
-    apt-get -y update && apt-get -y upgrade \
+RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian-security bullseye-security main contrib non-free" >> /etc/apt/sources.list \
+    && apt-get -y update \
+    && apt-get -y upgrade \
     && apt install -y -q \
         bash \
         wget \
@@ -22,6 +25,7 @@ RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
         pip \
         pyinstaller \
     && pip install -r requirements.txt \
+    && playwright install chromium \
     && pip install face_recognition --no-deps \
     && pyinstaller \
         -D Movie_Data_Capture.py \

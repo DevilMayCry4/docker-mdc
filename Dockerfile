@@ -10,7 +10,7 @@ RUN \
     && apt-get autoremove --purge -y \
     && apt-get clean -y
 
-ARG MDC_SOURCE_VERSION=2.0.15
+ARG MDC_SOURCE_VERSION=2.0.16
 ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-0e7f7f497e49ae9c2dd776357892a1f1cd6d6068}
  
 
@@ -22,6 +22,7 @@ RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
         pip \
         pyinstaller \
     && pip install -r requirements.txt \
+    && playwright install chromium \
     && pip install face_recognition --no-deps \
     && pyinstaller \
         -D Movie_Data_Capture.py \

@@ -1,5 +1,42 @@
 FROM python:3.10-slim-bullseye as build-stage
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libglib2.0-0 \
+    libnss3 \
+    libnspr4 \
+    libdbus-1-3 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libxcb1 \
+    libx11-6 \
+    libxext6 \
+    libpango-1.0-0 \
+    libcairo2 \
+    libasound2 \
+    libatspi2.0-0 \
+    libsmime3 \
+    libnssutil3 \
+    libexpat1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# 2. 安装python依赖 & playwright
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 3. 下载浏览器二进制（重点！slim镜像必须这一步）
+RUN python -m playwright install chromium
+# 如需自动安装系统依赖（上面apt已经装了，这里可以只下浏览器）
+# RUN python -m playwright install --with-deps
+
 RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
     && echo "deb http://archive.debian.org/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list \
     && echo "deb http://archive.debian.org/debian-security bullseye-security main contrib non-free" >> /etc/apt/sources.list \
@@ -11,8 +48,7 @@ RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" >
         binutils \
         upx \
     && apt-get autoremove --purge -y \
-    && apt-get clean -y
-RUN npx playwright install --with-deps
+    && apt-get clean -y 
 
 ARG MDC_SOURCE_VERSION=2.0.16
 ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-0e7f7f497e49ae9c2dd776357892a1f1cd6d6068}

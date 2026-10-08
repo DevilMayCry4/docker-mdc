@@ -22,7 +22,6 @@ RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
         pip \
         pyinstaller \
     && pip install -r requirements.txt \
-    && playwright install chromium \
     && pip install face_recognition --no-deps \
     && pyinstaller \
         -D Movie_Data_Capture.py \

@@ -27,15 +27,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libexpat1 \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. 安装python依赖 & playwright
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
-# 3. 下载浏览器二进制（重点！slim镜像必须这一步）
-RUN python -m playwright install chromium
-# 如需自动安装系统依赖（上面apt已经装了，这里可以只下浏览器）
-# RUN python -m playwright install --with-deps
+
+
 
 RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
     && echo "deb http://archive.debian.org/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list \
@@ -49,6 +43,11 @@ RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" >
         upx \
     && apt-get autoremove --purge -y \
     && apt-get clean -y 
+
+# 3. 下载浏览器二进制（重点！slim镜像必须这一步）
+RUN python -m playwright install chromium
+# 如需自动安装系统依赖（上面apt已经装了，这里可以只下浏览器）
+# RUN python -m playwright install --with-deps
 
 ARG MDC_SOURCE_VERSION=2.0.16
 ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-0e7f7f497e49ae9c2dd776357892a1f1cd6d6068}

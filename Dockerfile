@@ -27,6 +27,8 @@ RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
     && pip install -r requirements.txt \
     && pip install playwright \
     && pip install face_recognition --no-deps \
+    # 重点：构建阶段直接下载chromium浏览器
+    && playwright install chromium \
     && pyinstaller \
         -D Movie_Data_Capture.py \
         --hidden-import "ImageProcessing.cnn" \

@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye as build-stage
+FROM debian:bullseye as build-stage
  
 RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
     && echo "deb http://archive.debian.org/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list \

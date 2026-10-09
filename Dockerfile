@@ -1,4 +1,13 @@
 FROM python:3.10-slim-bullseye as build-stage
+RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian-security bullseye-security main contrib non-free" >> /etc/apt/sources.list \
+    && apt-get -y update \
+    && apt-get -y upgrade \
+    && apt install -y -q bash wget binutils upx \
+    && apt-get autoremove --purge -y \
+    && apt-get clean -y
+
 RUN \
     apt-get -y update && apt-get -y upgrade \
     && apt install -y -q \

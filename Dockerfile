@@ -7,7 +7,7 @@ RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" >
     && apt install -y -q bash wget binutils upx \
     && apt-get autoremove --purge -y \
     && apt-get clean -y
-
+ 
 RUN \
     apt-get -y update && apt-get -y upgrade \
     && apt install -y -q \
@@ -24,20 +24,16 @@ ARG MDC_SOURCE_VERSION=2.0.16
 ENV MDC_SOURCE_VERSION=${MDC_SOURCE_VERSION:-0e7f7f497e49ae9c2dd776357892a1f1cd6d6068}
 
 RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
-    # get mdc source code
     && wget -O-  https://codeload.github.com/DevilMayCry4/Movie_Data_Capture/tar.gz/refs/tags/$MDC_SOURCE_VERSION  | tar xz -C /tmp/mdc --strip-components 1 \
     && python3 -m venv /opt/venv && . /opt/venv/bin/activate \
     && pip install --upgrade \
         pip \
         pyinstaller \
     && pip install -r requirements.txt \
-    # 新增：安装playwright python包
     && pip install playwright \
-    # 安装face_recognition，需要dlib，build-stage有cmake/build-essential编译环境
     && pip install face_recognition --no-deps \
     && pyinstaller \
         -D Movie_Data_Capture.py \
-        # --python-option u 已废弃，新版pyinstaller不再支持
         --hidden-import "ImageProcessing.cnn" \
         --hidden-import "playwright" \
         --hidden-import "playwright.sync_api" \
@@ -60,18 +56,32 @@ ENV TZ="Asia/Shanghai"
 ENV UID=0
 ENV GID=0
 ENV UMASK=002
-# playwright浏览器存放路径，放到/config持久化卷，避免每次启动重下
 ENV PLAYWRIGHT_BROWSERS_PATH=/config/ms-playwright
 
 ADD docker-entrypoint.sh docker-entrypoint.sh
 COPY --from=build-stage /tmp/mdc/dist/Movie_Data_Capture /app
 
+# Playwright chromium 系统运行依赖库，注释移到RUN外面，RUN内部续行无注释
 RUN \
     apt-get -y update && apt-get -y upgrade \
     && apt install -y -q \
         gosu \
-        # Playwright chromium 系统运行依赖库
-        ca-certificates libnss3 libatk-bridge2.0-0 libdrm2 libxkbcommon0 libgtk-3-0 libgbm1 libasound2 libatspi2.0-0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libxcursor1 libxinerama1 libxi6 \
+        ca-certificates \
+        libnss3 \
+        libatk-bridge2.0-0 \
+        libdrm2 \
+        libxkbcommon0 \
+        libgtk-3-0 \
+        libgbm1 \
+        libasound2 \
+        libatspi2.0-0 \
+        libxcomposite1 \
+        libxdamage1 \
+        libxfixes3 \
+        libxrandr2 \
+        libxcursor1 \
+        libxinerama1 \
+        libxi6 \
     && apt-get autoremove --purge -y \
     && apt-get clean -y \
     && chmod +x docker-entrypoint.sh \

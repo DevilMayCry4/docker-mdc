@@ -1,36 +1,5 @@
 FROM python:3.10-slim-bullseye as build-stage
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libglib2.0-0 \
-    libnss3 \
-    libnspr4 \
-    libdbus-1-3 \
-    libatk1.0-0 \
-    libatk-bridge2.0-0 \
-    libcups2 \
-    libdrm2 \
-    libxkbcommon0 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxfixes3 \
-    libxrandr2 \
-    libgbm1 \
-    libxcb1 \
-    libx11-6 \
-    libxext6 \
-    libpango-1.0-0 \
-    libcairo2 \
-    libasound2 \
-    libatspi2.0-0 \
-    libsmime3 \
-    libnssutil3 \
-    libexpat1 \
-    && rm -rf /var/lib/apt/lists/*
-
-
-
-
-
+ 
 RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
     && echo "deb http://archive.debian.org/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list \
     && echo "deb http://archive.debian.org/debian-security bullseye-security main contrib non-free" >> /etc/apt/sources.list \
@@ -74,7 +43,7 @@ RUN mkdir -p /tmp/mdc && cd /tmp/mdc \
         --add-data "scrapinglib:scrapinglib" \
     && cp /tmp/mdc/config.ini /tmp/mdc/dist/Movie_Data_Capture/config.template
 
-FROM debian:11-slim
+FROM debian:bullseye
 
 ARG BUILD_DATE
 ARG VERSION

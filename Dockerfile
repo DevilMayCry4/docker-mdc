@@ -1,15 +1,10 @@
-FROM python:3.10-slim-bullseye as build-stage
-RUN echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
+FROM python:3.10-slim-bullseye AS build-stage
+RUN \
+    # bullseye归档源
+    echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
     && echo "deb http://archive.debian.org/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list \
     && echo "deb http://archive.debian.org/debian-security bullseye-security main contrib non-free" >> /etc/apt/sources.list \
     && apt-get -y update \
-    && apt-get -y upgrade \
-    && apt install -y -q bash wget binutils upx \
-    && apt-get autoremove --purge -y \
-    && apt-get clean -y
- 
-RUN \
-    apt-get -y update && apt-get -y upgrade \
     && apt install -y -q \
         bash \
         wget \
@@ -61,9 +56,12 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/config/ms-playwright
 ADD docker-entrypoint.sh docker-entrypoint.sh
 COPY --from=build-stage /tmp/mdc/dist/Movie_Data_Capture /app
 
-# Playwright chromium 系统运行依赖库，注释移到RUN外面，RUN内部续行无注释
+# 替换为bullseye归档源，并且删除 apt-get upgrade！！！
 RUN \
-    apt-get -y update && apt-get -y upgrade \
+    echo "deb http://archive.debian.org/debian bullseye main contrib non-free" > /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian bullseye-updates main contrib non-free" >> /etc/apt/sources.list \
+    && echo "deb http://archive.debian.org/debian-security bullseye-security main contrib non-free" >> /etc/apt/sources.list \
+    && apt-get -y update \
     && apt install -y -q \
         gosu \
         ca-certificates \

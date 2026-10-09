@@ -29,6 +29,5 @@ if [ ! -f "${config_file}" ]; then
 fi
 
 echo "Starting..."
-/app/Movie_Data_Capture --install-playwright || true
 cd /data
 gosu ${USER} /app/Movie_Data_Capture
